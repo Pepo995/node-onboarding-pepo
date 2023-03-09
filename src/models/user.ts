@@ -1,8 +1,7 @@
 import { Model, DataTypes, CreationOptional } from 'sequelize';
 import { connection } from '../database';
-import { CreateUserParams } from '../interfaces/index';
 
-class User extends Model<CreateUserParams> implements CreateUserParams {
+class User extends Model {
   declare id: number;
   declare firstName: string;
   declare lastName: string;
