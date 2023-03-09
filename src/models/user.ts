@@ -6,9 +6,8 @@ class User extends Model {
   declare firstName: string;
   declare lastName: string;
   declare email: string;
-  declare username: string;
   declare password: string;
-  declare age: number;
+  declare company: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -34,17 +33,13 @@ User.init(
       allowNull: false,
       unique: true,
     },
-    username: {
+    company: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    age: {
-      type: DataTypes.INTEGER,
       allowNull: false,
     },
     createdAt: {
