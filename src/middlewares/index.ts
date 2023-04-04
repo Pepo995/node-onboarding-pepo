@@ -1,1 +1,1 @@
-export { errorLogger, errorResponder } from './error';
+export * from './error';

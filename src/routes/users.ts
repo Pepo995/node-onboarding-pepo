@@ -6,7 +6,7 @@ import {
   loginUserParams,
   LoginUserParams,
   updateUserParams,
-} from '../interfaces/index';
+} from '../interfaces';
 import { getUsers, register, getUserById, deleteUser, updateUser, login } from '../controllers/users';
 
 const router = express.Router();

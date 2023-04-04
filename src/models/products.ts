@@ -1,20 +1,17 @@
 import { Model, DataTypes, CreationOptional } from 'sequelize';
 import { connection } from '../database';
+import Category from './categories';
 
-class User extends Model {
+class Product extends Model {
   declare id: number;
-  declare firstName: string;
-  declare lastName: string;
-  declare email: string;
-  declare password: string;
-  declare company: string;
-  declare profileImage: string;
-  declare position: string;
+  declare name: string;
+  declare price: number;
+  declare image: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
 
-User.init(
+Product.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -22,34 +19,21 @@ User.init(
       allowNull: false,
       primaryKey: true,
     },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
-    company: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    password: {
-      type: DataTypes.STRING,
+    price: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    profileImage: {
+    image: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    position: {
-      type: DataTypes.STRING,
+    categoryId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     createdAt: {
@@ -63,9 +47,12 @@ User.init(
   },
   {
     sequelize: connection,
-    modelName: 'User',
-    tableName: 'users',
+    modelName: 'Product',
+    tableName: 'products',
   },
 );
 
-export default User;
+Category.hasOne(Product);
+Product.belongsTo(Category);
+
+export default Product;
