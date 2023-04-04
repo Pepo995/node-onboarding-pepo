@@ -23,8 +23,8 @@ export const getUserParams = z.object({
 export type GetUserParams = z.infer<typeof getUserParams>;
 
 export const updateUserParams = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  age: z.number(),
+  email: z.string().nullable().optional(),
+  firstName: z.string().nullable().optional(),
+  lastName: z.string().nullable().optional(),
 });
 export type UpdateUserParams = z.infer<typeof updateUserParams>;

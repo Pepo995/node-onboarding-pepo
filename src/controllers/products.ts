@@ -1,4 +1,4 @@
-import { Product } from '../models';
+import { ExtraItem, Product } from '../models';
 import { createProductParams, CreateProductParams, GetProductsParams, UpdateProductParams } from '../interfaces';
 import { undefined } from 'zod';
 import { Op } from 'sequelize';
@@ -26,6 +26,14 @@ export const getProducts = async ({ name, categories, sortBy, page, size }: GetP
   });
   return { totalCount, products };
 };
+
+export const getProductById = async (productId: number) =>
+  await Product.findByPk(productId, {
+    include: {
+      model: ExtraItem,
+      attributes: ['id', 'name', 'price'],
+    },
+  });
 
 export const createProduct = async (createProduct: CreateProductParams) => {
   const product = await Product.findOne({
