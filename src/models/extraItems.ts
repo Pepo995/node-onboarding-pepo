@@ -1,23 +1,20 @@
 import { Model, DataTypes, CreationOptional } from 'sequelize';
 import { connection } from '../database';
-import Category from './categories';
-import ExtraItem from './extraItems';
+import Product from './products';
 
-class Product extends Model {
+class ExtraItem extends Model {
   declare id: number;
   declare name: string;
   declare price: number;
-  declare image: string;
-  declare description: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
   static associate = ({ ProductsExtraItems }) => {
-    Product.belongsToMany(ExtraItem, { through: ProductsExtraItems, foreignKey: 'productId' });
+    ExtraItem.belongsToMany(Product, { through: ProductsExtraItems, foreignKey: 'extraItemId' });
   };
 }
 
-Product.init(
+ExtraItem.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -33,18 +30,7 @@ Product.init(
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    image: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    categoryId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      unique: false,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -57,12 +43,9 @@ Product.init(
   },
   {
     sequelize: connection,
-    modelName: 'Product',
-    tableName: 'products',
+    modelName: 'ExtraItem',
+    tableName: 'extraItems',
   },
 );
 
-Category.hasOne(Product);
-Product.belongsTo(Category);
-
-export default Product;
+export default ExtraItem;

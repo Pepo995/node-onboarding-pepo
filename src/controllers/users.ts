@@ -70,6 +70,13 @@ export const updateUser = async (userId: number, updatedUserParams: UpdateUserPa
   if (!user) {
     throw new Error('The user does not exists');
   }
+  const userEmail = await User.findOne({
+    where: { email: updatedUserParams.email } && { id: !userId },
+  });
+
+  if (userEmail) {
+    throw new Error('The email already exists');
+  }
 
   user.update(updatedUserParams);
 

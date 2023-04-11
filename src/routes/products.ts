@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { createProduct, deleteProduct, getProducts, updateProduct } from '../controllers';
+import { createProduct, deleteProduct, getProductById, getProducts, updateProduct } from '../controllers';
 import {
   createProductParams,
   CreateProductParams,
@@ -23,6 +23,20 @@ router.get(
       const allProducts = await getProducts(parsedParams);
 
       res.send(allProducts);
+    } catch (error: any) {
+      next(error);
+    }
+  },
+);
+
+router.get(
+  '/:id',
+  authenticate.authenticate('jwt', { session: false }),
+  async ({ params }: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = getProductParams.parse(params);
+      const product = await getProductById(id);
+      res.send(product);
     } catch (error: any) {
       next(error);
     }

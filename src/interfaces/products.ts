@@ -5,6 +5,7 @@ export const createProductParams = z.object({
   price: z.number(),
   image: z.string(),
   categoryId: z.number(),
+  description: z.string(),
 });
 export type CreateProductParams = z.infer<typeof createProductParams>;
 
