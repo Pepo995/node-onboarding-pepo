@@ -1,6 +1,5 @@
 import { Model, DataTypes, CreationOptional } from 'sequelize';
 import { connection } from '../database';
-import Product from './products';
 
 class ExtraItem extends Model {
   declare id: number;
@@ -9,7 +8,7 @@ class ExtraItem extends Model {
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
-  static associate = ({ ProductsExtraItems }) => {
+  static associate = ({ Product, ProductsExtraItems }) => {
     ExtraItem.belongsToMany(Product, { through: ProductsExtraItems, foreignKey: 'extraItemId' });
   };
 }

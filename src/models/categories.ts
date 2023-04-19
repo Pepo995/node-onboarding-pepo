@@ -6,6 +6,10 @@ class Category extends Model {
   declare name: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+
+  static associate = ({ Product }) => {
+    Category.hasMany(Product);
+  };
 }
 
 Category.init(

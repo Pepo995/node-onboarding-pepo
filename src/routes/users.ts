@@ -7,7 +7,8 @@ import {
   LoginUserParams,
   updateUserParams,
 } from '../interfaces';
-import { getUsers, register, getUserById, deleteUser, updateUser, login } from '../controllers/users';
+import { getUsers, register, deleteUser, updateUser, login, getUser } from '../controllers/users';
+import { authenticate } from '../middlewares';
 
 const router = express.Router();
 
@@ -20,15 +21,20 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get('/:id', async ({ params }: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = getUserParams.parse(params);
-    const user = await getUserById(id);
-    res.send(user);
-  } catch (error: any) {
-    next(error);
-  }
-});
+router.get(
+  '/currentUser',
+  authenticate.authenticate('jwt', { session: false }),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = getUserParams.parse(req.user);
+      const user = await getUser(id);
+      console.log(user);
+      res.send(user);
+    } catch (error: any) {
+      next(error);
+    }
+  },
+);
 
 router.post('/register', async ({ body }: { body: CreateUserParams }, res: Response, next: NextFunction) => {
   try {
@@ -62,15 +68,19 @@ router.delete('/:id', async ({ params }: Request, res: Response, next: NextFunct
   }
 });
 
-router.put('/:id', async ({ body, params }: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = getUserParams.parse(params);
-    const updatedAtributes = updateUserParams.parse(body);
-    const data = await updateUser(id, updatedAtributes);
-    res.status(200).send(data);
-  } catch (error: any) {
-    next(error);
-  }
-});
+router.put(
+  '/updateCurrentUser',
+  authenticate.authenticate('jwt', { session: false }),
+  async ({ body }, req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = getUserParams.parse(req.user);
+      const updatedAtributes = updateUserParams.parse(body);
+      const data = await updateUser(id, updatedAtributes);
+      res.status(200).send(data);
+    } catch (error: any) {
+      next(error);
+    }
+  },
+);
 
 export default router;

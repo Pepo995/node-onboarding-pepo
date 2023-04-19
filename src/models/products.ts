@@ -1,7 +1,5 @@
 import { Model, DataTypes, CreationOptional } from 'sequelize';
 import { connection } from '../database';
-import Category from './categories';
-import ExtraItem from './extraItems';
 
 class Product extends Model {
   declare id: number;
@@ -12,8 +10,10 @@ class Product extends Model {
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
-  static associate = ({ ProductsExtraItems }) => {
+  static associate = ({ ExtraItem, ProductsExtraItems, Category, Sale }) => {
     Product.belongsToMany(ExtraItem, { through: ProductsExtraItems, foreignKey: 'productId' });
+    Product.belongsTo(Category);
+    Product.hasMany(Sale);
   };
 }
 
@@ -61,8 +61,5 @@ Product.init(
     tableName: 'products',
   },
 );
-
-Category.hasOne(Product);
-Product.belongsTo(Category);
 
 export default Product;
