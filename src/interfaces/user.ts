@@ -18,7 +18,7 @@ export const loginUserParams = z.object({
 export type LoginUserParams = z.infer<typeof loginUserParams>;
 
 export const getUserParams = z.object({
-  id: z.string().transform((val) => parseInt(val)),
+  id: z.number(),
 });
 export type GetUserParams = z.infer<typeof getUserParams>;
 

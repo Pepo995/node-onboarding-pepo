@@ -4,8 +4,9 @@ import Product from './products';
 import Category from './categories';
 import ExtraItem from './extraItems';
 import ProductsExtraItems from './productsExtraItems';
+import Sale from './sales';
 
-const models = { User, Product, Category, ExtraItem, ProductsExtraItems };
+const models = { User, Product, Category, ExtraItem, ProductsExtraItems, Sale };
 
 Object.entries(models).map(([, model]: any[]) => {
   if (model?.associate) {
@@ -13,4 +14,4 @@ Object.entries(models).map(([, model]: any[]) => {
   }
 });
 
-export { User, Product, Category, ExtraItem, ProductsExtraItems };
+export { User, Product, Category, ExtraItem, ProductsExtraItems, Sale };

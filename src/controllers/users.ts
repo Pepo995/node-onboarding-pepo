@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 export const getUsers = async () => await User.findAll();
 
-export const getUserById = async (userId: number) =>
+export const getUser = async (userId: number) =>
   await User.findOne({
     where: { id: userId },
   });

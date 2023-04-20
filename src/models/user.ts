@@ -12,6 +12,10 @@ class User extends Model {
   declare position: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+
+  static associate = ({ Sale }) => {
+    User.hasMany(Sale);
+  };
 }
 
 User.init(
